@@ -1,0 +1,23 @@
+# 筛选评分配置（与 docs/rubric.md 配套，git 管理版本）
+version: "0.1"
+
+weights:
+  ros_potential: 0.30    # ROS 生成潜力
+  stability: 0.20        # 结构与稳定性
+  cdi_fit: 0.20          # CDI 适配性
+  synthesis: 0.15        # 合成可行性
+  novelty: 0.15          # 新颖性
+
+thresholds:
+  pass_min_total: 7.0    # 加权总分下限
+  pass_min_per_dim: 5.0  # 单维度下限（低于即 hold）
+  reject_max_total: 5.0  # 低于此总分直接 reject
+  vote_std_max: 1.0      # 多次评分标准差上限（超出归 hold）
+
+scoring:
+  n_runs: 5              # 独立评分次数
+  temperature: 0.0       # 评分调用
+  vote_temperature: 0.3  # 投票类调用
+
+roles:
+  scorer: screener       # 对应 config/models.yaml 中的角色名

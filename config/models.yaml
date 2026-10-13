@@ -1,0 +1,24 @@
+# 模型角色配置。agent 只引用角色名，不直接绑定模型。
+# provider 通过 LiteLLM 适配：deepseek / openai / anthropic / openrouter / local-vllm 等。
+# API key 从环境变量读取，不要写进本文件。
+roles:
+  extractor:         # 文献提取（主）
+    provider: deepseek
+    model: deepseek-chat
+  extractor_third:   # 双模型冲突时的仲裁提取（固定用远程模型）
+    provider: deepseek
+    model: deepseek-chat
+  screener:          # 筛选评分
+    provider: deepseek
+    model: deepseek-chat
+  reasoner:          # 机理分析
+    provider: deepseek
+    model: deepseek-reasoner
+  local_worker:      # 归纳、整理、批量任务
+    provider: local-vllm
+    model: Qwen3-30B-A3B
+    base_url: http://localhost:8000/v1
+  local_extractor:   # 本地微调提取模型（P5 上线）
+    provider: local-vllm
+    model: Qwen3-8B-extract-lora
+    base_url: http://localhost:8000/v1
